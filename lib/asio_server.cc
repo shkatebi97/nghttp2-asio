@@ -82,14 +82,12 @@ boost::system::error_code server::bind_and_listen(boost::system::error_code &ec,
   // Open the acceptor with the option to reuse the address (i.e.
   // SO_REUSEADDR).
   tcp::resolver resolver(io_service_pool_.get_io_service());
-  tcp::resolver::query query(address, port);
-  auto it = resolver.resolve(query, ec);
+  auto it = resolver.resolve(address, port, ec);
   if (ec) {
     return ec;
   }
 
-  for (; it != tcp::resolver::iterator(); ++it) {
-    tcp::endpoint endpoint = *it;
+  for (const auto& endpoint : endpoints) {
     auto acceptor = tcp::acceptor(io_service_pool_.get_io_service());
 
     if (acceptor.open(endpoint.protocol(), ec)) {
