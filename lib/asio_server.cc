@@ -195,7 +195,7 @@ void server::stop() {
 
 void server::join() { io_service_pool_.join(); }
 
-const std::vector<std::shared_ptr<boost::asio::io_service>> &
+const std::vector<std::shared_ptr<boost::asio::io_context>> &
 server::io_services() const {
   return io_service_pool_.io_services();
 }

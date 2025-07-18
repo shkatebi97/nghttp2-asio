@@ -39,7 +39,7 @@ namespace asio_http2 {
 namespace client {
 
 session_impl::session_impl(
-    boost::asio::io_service &io_service,
+    boost::asio::io_context &io_service,
     const boost::posix_time::time_duration &connect_timeout)
     : wblen_(0),
       io_service_(io_service),
@@ -585,7 +585,7 @@ void session_impl::shutdown() {
   signal_write();
 }
 
-boost::asio::io_service &session_impl::io_service() { return io_service_; }
+boost::asio::io_context &session_impl::io_service() { return io_service_; }
 
 void session_impl::signal_write() {
   if (!inside_callback_) {
